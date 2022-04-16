@@ -32,22 +32,26 @@
             <!-- [ Main Content ] start -->
             <div class="row">
                 <div class="col-sm-4">
-                    <div class="input-group rounded">
-                        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                    <div class="input-group mb-3">
+                        <select class="custom-select" id="inputGroupSelect01">
+                            <option selected>Store</option>
+                            <option value="--" id="--">--</option>
+
+                            <option value="125" id="125">125</option>
+
+                        </select>
                         <span class="input-group-text border-0" id="search-addon">
-                          <i class="fas fa-search"></i>
-                        </span>
-                      </div>
-				</div>	
+                            <i class="fas fa-search" onclick="filterChart()"></i>
+                          </span>                    </div>
+				</div>
                 <div class="col-sm-4">
                     
-                    <input  class="form-control rounded" type="date" 
-                           value="2021-05-01" id="startdate"  onchange="filterData()"
+                    <input  class="form-control rounded" type="date"  value="2021-05-01" id="startdate"  onchange="filterData()"
                          >
 				</div>
                 
                 <div class="col-sm-4">
-                        <input  class="form-control rounded"   value="2022-05-10" type="date" id="enddate"  onchange="filterData()"  value="2021-05-10"  />
+                        <input  class="form-control rounded"    type="date" id="enddate"  onchange="filterData()"  value="2021-05-10"  />
                       
                      <br><br>
 				</div>
@@ -319,15 +323,17 @@ async function getData(){
 
 
    const date_daily_sales=['2021-05-01','2021-05-02','2021-05-03','2021-05-04'];
-    const count_daily_sales=[22,25,10,11];
+   const count_daily_sales=[22,25,10,11];
+   const chain='225';
 //     async function getChartd() {
 // await   getData()
-    let ctx1 = document.getElementById('daily').getContext('2d');
-    let daily = new Chart(ctx1, {
+    const ctx1 = document.getElementById('daily').getContext('2d');
+    const daily = new Chart(ctx1, {
         type: 'line',
         data: {
             labels: date_daily_sales,
             datasets: [{
+                id:chain,
                 label: '# of Votes',
                 data: count_daily_sales,
                 backgroundColor: [
@@ -381,12 +387,13 @@ async function getData(){
   const weekly=new Chart(
       document.getElementById('weekly'),config
   );
-    var date_monthly_sales=[];
-    var count_monthly_sales=[];
-    async function getChartm() {
-        await   getData()
-    let ctx3 = document.getElementById('monthly').getContext('2d');
-    let monthly = new Chart(ctx3, {
+
+    const date_monthly_sales=['2021-05-01','2021-05-02','2021-05-03','2021-05-04'];
+    const count_monthly_sales=[1,4,5,3];
+    // async function getChartm() {
+    //     await   getData()
+    const ctx3 = document.getElementById('monthly').getContext('2d');
+    const monthly = new Chart(ctx3, {
         type: 'line',
         data: {
             labels: date_monthly_sales,
@@ -409,22 +416,22 @@ async function getData(){
                 }
             }
         }
-    });}
-    getChartm()
-   
-    let date_yearly_sales;
-    let  count_yearly_sales;
-    async function getChart() {
-        await   getData()
+    });
+    // }
+    // getChartm()
+   const date_yearly=['2021-05-01','2021-05-02','2021-05-03','2021-05-04'];
+    const  count_yearly=[10.5,11,2,8];
+    // async function getChart() {
+    //     await   getData()
 
-    let ctx = document.getElementById('yearly').getContext('2d');
-    let yearly = new Chart(ctx, {
+   const ctx = document.getElementById('yearly').getContext('2d');
+    const yearly = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: date_yearly_sales,
+        labels: date_yearly,
         datasets: [{
             label: 'Sales',
-            data: count_yearly_sales,
+            data: count_yearly,
             backgroundColor: [
                         'Blue'
             ],
@@ -439,9 +446,9 @@ async function getData(){
     },
 });
 
-}
-getChart()
-//
+// }
+// getChart()
+
  fetch('http://3.15.2.105:4200/api/store/',{
 //
    method: 'POST',
@@ -536,28 +543,56 @@ async function getData(){
         function filterData(){
             const dates2=[...dates];
             const dates3=[...date_daily_sales]
-            //console.log(dates3)
+            const dates4=[...date_yearly]
+            const dates5=[...date_monthly_sales]
+            //console.log(dates5)
             //console.log(dates2)
             const startdate = document.getElementById('startdate');
             const enddate = document.getElementById('enddate');
             //get the index number in array
             const indexstartdate =dates2.indexOf(startdate.value);
             const indexenddate =dates2.indexOf(enddate.value);
-            const indexstartdate2=dates3.indexOf(startdate);
-            const indexenddate2 =dates3.indexOf(enddate.value);
-            //console.log(indexstartdate)
+            const indexstartdate3 =dates3.indexOf(startdate.value);
+            const indexenddate3 =dates3.indexOf(enddate.value);
+            const indexstartdate4 =dates4.indexOf(startdate.value);
+            const indexenddate4 =dates4.indexOf(enddate.value);
+            const indexstartdate5 =dates5.indexOf(startdate.value);
+            const indexenddate5 =dates5.indexOf(enddate.value);
+            //console.log(indexstartdate3)
             
             //slice the array (pie) only showing the selected section
             const filterDate= dates2.slice(indexstartdate,indexenddate+1);
             const filterDate2= dates3.slice(indexstartdate,indexenddate+1);
-
+            const filterDate3= dates4.slice(indexstartdate,indexenddate+1);
+            const filterDate4= dates5.slice(indexstartdate,indexenddate+1);
+           // const filterDate2= dates3.slice(indexstartdate,indexenddate+1);
             //replace labels in chart
             weekly.config.data.labels = filterDate;
-            daily.data.labels = filterDate;
-console.log(daily.data.labels)
-            //console.log(weekly.config.data.labels)
+            daily.data.labels=filterDate2;
+            yearly.data.labels=filterDate3;
+            monthly.data.labels=filterDate3;
+
             weekly.update();
+            daily.update();
+            yearly.update();
+            monthly.update();
+            //console.log(weekly.config.data.labels)
+            //console.log(daily.data.labels)
         }
+        //function filter chart 
+        function filterChart(){
+            const  filterData = daily.data.datasets[0].id.filter(value => value=chain)
+           console.log(filterData);
+
+        //filter array.filter command
+        const filterChain= [];
+
+        //create 2 new array for dates and counts
+        //for loop + loop through arraygetting the matching value 
+        // push this to new array
+        //reassign the array into the chart
+        //update chart
+    }
     </script> 
     <script>
         async function getDatas(){
