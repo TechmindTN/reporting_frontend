@@ -1,0 +1,651 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}	
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-content">
+            <h4>Orders Report</h4><br>
+
+            <!-- [ breadcrumb ] start -->
+            <!-- <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">Dashboard Analytics</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="#!">Dashboard Analytics</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- [ breadcrumb ] end -->
+            <!-- [ Main Content ] start -->
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="input-group rounded">
+                        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                        <span class="input-group-text border-0" id="search-addon">
+                          <i class="fas fa-search"></i>
+                        </span>
+                      </div>
+				</div>	
+                <div class="col-sm-4">
+                    <div class="input-group mb-3">
+                        <select class="custom-select" id="inputGroupSelect01">
+                            <option selected>Choose...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+				</div>
+                <div class="col-sm-4 card-body text-right">
+                    <br>
+                </div>  
+                <!-- sales-card start -->
+                <div class="col-md-6 col-xl-2">
+                    <div class="card bg-c-blue order-card">
+                        <div class="card-body">
+                            <h6 class="text-white">Sales</h6>
+                            <h4 class="text-right text-white"><i class="feather icon-shopping-cart float-left"></i><span id="sales"></span></h4>
+                            <!-- <p class="m-b-0">Completed Orders<span class="float-right">351</span></p> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="card bg-c-green order-card">
+                        <div class="card-body">
+                            <h6 class="text-white">Total Orders</h6>
+                            <h4 class="text-right text-white"><i class="feather icon-tag float-left"></i><span id="orders"></span></h4>
+                            <!-- <p class="m-b-0">This Month<span class="float-right">213</span></p> -->
+                        </div>
+                    </div>
+                </div>
+                <!-- total-cash-card start -->
+                <div class="col-md-6 col-xl-2">
+                    <div class="card bg-c-yellow order-card">
+                        <div class="card-body">
+                            <h6 class="text-white">Total Cash</h6>
+                            <h4 class="text-right text-white"><i class="feather icon-shopping-cart float-left"></i><span id="cash"></span></h4>
+                            <!-- <p class="m-b-0">Completed Orders<span class="float-right">351</span></p> -->
+                        </div>
+                    </div>
+                </div>
+                <!-- total-debit-card start -->
+                <div class="col-md-6 col-xl-2">
+                    <div class="card bg-c-red order-card">
+                        <div class="card-body">
+                            <h6 class="text-white">Total Debit</h6>
+                            <h4 class="text-right text-white"><i class="feather icon-repeat float-left"></i><span id="debit"></span></h4>
+                            <!-- <p class="m-b-0">Completed Orders<span class="float-right">351</span></p> -->
+                        </div>
+                    </div>
+                </div>
+                <!--product-quantity-card start-->
+                <div class="col-md-6 col-xl-2">
+                    <div class="card bg-c-purple order-card">
+                        <div class="card-body">
+                            <h6 class="text-white">Product Quantity</h6>
+                            <h4 class="text-right text-white"><i class="feather icon-shopping-cart float-left"></i><span id="quantity"></span></h4>
+                            <!-- <p class="m-b-0">Completed Orders<span class="float-right">351</span></p> -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- order-card end -->
+                <!-- users visite start -->
+                <div class="col-md-12 col-xl-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Unique Visitor</h5>
+                        </div>
+                        <div class="card-body pl-0 pb-0">
+                            <div id="unique-visitor-chart"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-xl-6">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body bg-patern">
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <span>Top Product</span>
+                                        </div>
+                                        <div class="col text-right">
+                                            <h2 class="mb-0">826</h2>
+                                            <span class="text-c-green">8.2%<i class="feather icon-trending-up ml-1"></i></span>
+                                        </div>
+                                    </div>
+                                    <div id="customer-chart"></div>
+                                    <div class="row mt-3">
+                                        <div class="col">
+                                            <h3 class="m-0"><i class="fas fa-circle f-10 m-r-5 text-success"></i>674</h3>
+                                            <span class="ml-3">New</span>
+                                        </div>
+                                        <div class="col">
+                                            <h3 class="m-0"><i class="fas fa-circle text-primary f-10 m-r-5"></i>182</h3>
+                                            <span class="ml-3">Return</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card bg-primary text-white">
+                                <div class="card-body bg-patern-white">
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <span>Top Category</span>
+                                        </div>
+                                        <div class="col text-right">
+                                            <h2 class="mb-0 text-white">826</h2>
+                                            <span class="text-white">8.2%<i class="feather icon-trending-up ml-1"></i></span>
+                                        </div>
+                                    </div>
+                                    <div id="customer-chart1"></div>
+                                    <div class="row mt-3">
+                                        <div class="col">
+                                            <h3 class="m-0 text-white"><i class="fas fa-circle f-10 m-r-5 text-success"></i>674</h3>
+                                            <span class="ml-3">New</span>
+                                        </div>
+                                        <div class="col">
+                                            <h3 class="m-0 text-white"><i class="fas fa-circle f-10 m-r-5 text-white"></i>182</h3>
+                                            <span class="ml-3">Return</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+  
+                <div class="col-lg-12">
+                        <div class="card-header">
+                            <!-- <div class="card-header-right">
+                                <div class="btn-group card-option">
+                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="feather icon-more-horizontal"></i>
+                                    </button>
+                                    <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
+                                        <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
+                                        <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
+                                        <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
+                                        <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
+                                    </ul>
+                                </div>
+                            </div> -->
+                            <!-- <ul class="nav nav-pills nav-fill mt-3 border-bottom pb-3" id="pills-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"><i class="feather icon-film m-r-5"></i> Entertainment</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="feather icon-file-text m-r-5"></i> CMS</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false"><i class="feather icon-mail m-r-5"></i> Mail</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-news-tab" data-toggle="pill" href="#pills-news" role="tab" aria-controls="pills-news" aria-selected="false"><i class="feather icon-monitor m-r-5"></i> Newslatter</a>
+                                </li>
+                            </ul> -->
+                        </div>
+            
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Daily Orders Amount Detail</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div id="dailyo"></div>
+                                </div>
+                            </div>
+                        </div>    <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Weekly Orders Amount Detail</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div id="weeklyo"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Monthly Orders Amount Detail</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div id="monthlyo"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Yearly Orders Amount Detail</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div id="yearlyo"></div>
+                                </div>
+                            </div>
+                        </div>
+           
+      
+                 
+    
+            
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Apex Chart -->
+    <script src="/static/assets/js/plugins/apexcharts.min.js"></script>
+    <!-- custom-chart js -->
+    <script src="/static/assets/js/pages/dashboard-main.js"></script>
+    
+<script>
+//Fetch data from api
+fetch('http://3.15.2.105:4200/api/store/',{
+   method: 'POST',
+  headers: {
+         'Content-Type' : 'application/json'
+   },
+  body: JSON.stringify({
+        Store_ID:'114',
+        start_date: '2020-1-22',
+        end_date: '2022-5-10'
+     })
+ }).then(res => {
+     return res.json()
+    })
+   .then(data => {console.log(data);
+     document.querySelector('#sales').innerHTML = data.sales
+     document.querySelector('#orders').innerHTML = data.total_order
+     document.querySelector('#cash').innerHTML = data.total_cash
+     document.querySelector('#debit').innerHTML = data.total_debit
+     document.querySelector('#quantity').innerHTML = data.product_quantity    
+}
+    )
+    .catch(error => console.log('ERROR'))
+   const  barChartData= await response.json();
+   console.log(barChartData);
+   const date_daily_orders= barChartData.data.daily_orders.map( (x) => x.date)
+    const count_daily_orders= barChartData.data.daily_orders.map( (x) => x.count)
+   const date_weekly_orders= barChartData.data.weekly_orders.map( (x) => x.date)
+   const count_weekly_orders= barChartData.data.weekly_orders.map( (x) => x.count)
+    const date_monthly_orders= barChartData.data.monthly_orders.map( (x) => x.date)
+   const count_monthly_orders= barChartData.data.monthly_orders.map( (x) => x.count)
+    const date_yearly_orders= barChartData.data.yearly_orders.map( (x) => x.date)
+   const count_yearly_orders= barChartData.data.yearly_orders.map( (x) => x.count)
+
+
+</script>
+<script>
+'use strict';
+$(document).ready(function() {
+    
+    setTimeout(function() {
+        $(function() {
+            
+            var options = {
+                chart: {
+                    height: 300,
+                    type: 'line',
+                    zoom: {
+                        enabled: false
+                    },
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    width: [5, 7, 5],
+                    curve: 'straight',
+                    dashArray: [0, 8, 5]
+                },
+                colors: ["#0e9e4a", "#FFB64D", "#FF5370"],
+                fill: {
+                    type: "gradient",
+                    gradient: {
+                        shade: 'light'
+                    },
+                },
+                series: [{
+                        name: "Session Duration",
+                        data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10]
+                    }
+               
+                ],
+            
+                markers: {
+                    size: 0,
+
+                    hover: {
+                        sizeOffset: 6
+                    }
+                },
+                xaxis: {
+                    categories: ['01 Jan', '02 Jan', '03 Jan', '04 Jan', '05 Jan', '06 Jan', '07 Jan', '08 Jan', '09 Jan',
+                        '10 Jan', '11 Jan', '12 Jan'
+                    ],
+                },
+                tooltip: {
+                    y: [{
+                        title: {
+                            formatter: function(val) {
+                                return val + " (mins)"
+                            }
+                        }
+                    }, {
+                        title: {
+                            formatter: function(val) {
+                                return val + " per session"
+                            }
+                        }
+                    }, {
+                        title: {
+                            formatter: function(val) {
+                                return val;
+                            }
+                        }
+                    }]
+                },
+                grid: {
+                    borderColor: '#f1f1f1',
+                }
+            }
+            var chart = new ApexCharts(
+                document.querySelector("#dailyo"),
+                options
+            );
+            chart.render();
+        });
+    //     async function getData(){
+    //     const api ="http://dummy.restapiexample.com/api/v1/employees"
+    //     const response = await fetch(api)
+    //     const barChartData = await response.json();
+    //     console.log(barChartData)
+    //     const salary = barChartData.data.map((x) => x.employee_salary)
+    //     const age = barChartData.data.map((x) => x.employee_age)
+    //     const name = barChartData.data.map((x) => x.employee_name)
+    //     console.log(salary,age,name)
+    //     employee_label = name
+    //     employee_salarydata = salary
+    //     employee_agedata = age
+    //  }
+        $(function() {
+            var options = {
+                chart: {
+                    height: 300,
+                    type: 'line',
+                    zoom: {
+                        enabled: false
+                    },
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    width: [5, 7, 5],
+                    curve: 'straight',
+                    dashArray: [0, 8, 5]
+                },
+                colors: ["#0e9e4a", "#FFB64D", "#FF5370"],
+                fill: {
+                    type: "gradient",
+                    gradient: {
+                        shade: 'light'
+                    },
+                },
+                series: [{
+                        name: "Session Duration",
+                        data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10]
+                    }
+               
+                ],
+            
+                markers: {
+                    size: 0,
+
+                    hover: {
+                        sizeOffset: 6
+                    }
+                },
+                xaxis: {
+                    categories: ['01 Jan', '02 Jan', '03 Jan', '04 Jan', '05 Jan', '06 Jan', '07 Jan', '08 Jan', '09 Jan',
+                        '10 Jan', '11 Jan', '12 Jan'
+                    ],
+                },
+                tooltip: {
+                    y: [{
+                        title: {
+                            formatter: function(val) {
+                                return val + " (mins)"
+                            }
+                        }
+                    }, {
+                        title: {
+                            formatter: function(val) {
+                                return val + " per session"
+                            }
+                        }
+                    }, {
+                        title: {
+                            formatter: function(val) {
+                                return val;
+                            }
+                        }
+                    }]
+                },
+                grid: {
+                    borderColor: '#f1f1f1',
+                }
+            }
+            var chart = new ApexCharts(
+                document.querySelector("#weeklyo"),
+                options
+            );
+            chart.render();
+        });
+       var count_dailys =[];
+    var date_dailys =[];
+    async function getChart() {
+    await getData()
+     
+        $(function() {
+            var options = {
+                chart: {
+                    height: 300,
+                    type: 'line',
+                    zoom: {
+                        enabled: false
+                    },
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    width: [5, 7, 5],
+                    curve: 'straight',
+                    dashArray: [0, 8, 5]
+                },
+                colors: ["#0e9e4a", "#FFB64D", "#FF5370"],
+                fill: {
+                    type: "gradient",
+                    gradient: {
+                        shade: 'light'
+                    },
+                },
+                series: [{
+                        name: "Session Duration",
+                        data: count_dailys
+                    }
+               
+                ],
+            
+                markers: {
+                    size: 0,
+
+                    hover: {
+                        sizeOffset: 6
+                    }
+                },
+                xaxis: {
+                    categories: date_dailys,
+                },
+                tooltip: {
+                    y: [{
+                        title: {
+                            formatter: function(val) {
+                                return val + " (mins)"
+                            }
+                        }
+                    }, {
+                        title: {
+                            formatter: function(val) {
+                                return val + " per session"
+                            }
+                        }
+                    }, {
+                        title: {
+                            formatter: function(val) {
+                                return val;
+                            }
+                        }
+                    }]
+                },
+                grid: {
+                    borderColor: '#f1f1f1',
+                }
+            }
+            var chart = new ApexCharts(
+                document.querySelector("#monthlyo"),
+                options
+            );
+            chart.render();
+        });} 
+    getChart()
+        
+    var employee_label =[];
+    var employee_salarydata =[];
+    var employee_agedata =[];
+    async function getChartt() {
+    await getData()
+        $(function() {
+            var options = {
+                chart: {
+                    height: 300,
+                    type: 'line',
+                    zoom: {
+                        enabled: false
+                    },
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    width: [5, 7, 5],
+                    curve: 'straight',
+                    dashArray: [0, 8, 5]
+                },
+                colors: ["#0e9e4a", "#FFB64D", "#FF5370"],
+                fill: {
+                    type: "gradient",
+                    gradient: {
+                        shade: 'light'
+                    },
+                },
+                series: [{
+                        name: "Sales",
+                        data:  [457,144 , 100]
+                    }
+               
+                ],
+            
+                markers: {
+                    size: 0,
+
+                    hover: {
+                        sizeOffset: 6
+                    }
+                },
+                xaxis: {
+                    title: "Saless",
+                    categories: employee_salarydata,
+                },
+                tooltip: {
+                    y: [  {
+                        title: {
+                            formatter: function(val) {
+                                return val;
+                            }
+                        }
+                    }]
+                },
+                grid: {
+                    borderColor: '#f1f1f1',
+                }
+            }
+            var chart = new ApexCharts(
+                document.querySelector("#yearlyo"),
+                options
+            );
+            chart.render();
+        });} 
+    getChartt()
+    }, 700);
+});
+
+   
+
+    async function getData(){
+        const api ="http://3.15.2.105:4200/api/store/"
+        const response = await fetch(api,{
+  method: 'POST',
+  headers: {
+        'Content-Type' : 'application/json'
+  },
+  body: JSON.stringify({
+        Store_ID:'114',
+        start_date: '2020-1-22',
+        end_date: '2022-5-10'
+    })
+})
+        const barChartData = await response.json();
+         const date_daily = barChartData.daily_sales.map((x) => x.date)
+         const count_daily = barChartData.daily_sales.map((x) => x.count)
+         console.log(count_daily)
+
+         console.log(date_daily)
+         count_dailys= count_daily
+         date_dailys=date_daily
+        // const age = barChartData.data.map((x) => x.employee_age)
+        // const name = barChartData.data.map((x) => x.employee_name)
+        // console.log(salary,age,name)
+        // employee_label = name
+        // employee_salarydata = salary
+        // employee_agedata = age
+    }
+</script>
+      
+{% endblock javascripts %}

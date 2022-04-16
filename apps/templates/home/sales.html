@@ -1,0 +1,549 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}	
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-content">
+            <h4>Sales Report</h4><br>
+
+            <!-- [ breadcrumb ] start -->
+            <!-- <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">Dashboard Analytics</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="#!">Dashboard Analytics</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- [ breadcrumb ] end -->
+            <!-- [ Main Content ] start -->
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="input-group rounded">
+                        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                        <span class="input-group-text border-0" id="search-addon">
+                          <i class="fas fa-search"></i>
+                        </span>
+                      </div>
+				</div>	
+                <div class="col-sm-4">
+                    
+                    <input  class="form-control rounded" type="date" 
+                           value="2021-05-01" id="startdate"  onchange="filterData()"
+                         >
+				</div>
+                
+                <div class="col-sm-4">
+                        <input  class="form-control rounded"   value="2022-05-10" type="date" id="enddate"  onchange="filterData()"  value="2021-05-10"  />
+                      
+                     <br><br>
+				</div>
+          
+                
+                <!-- sales-card start -->
+                <div class="col-md-6 col-xl-2">
+                    <div class="card bg-c-blue order-card">
+                        <div class="card-body">
+                            <h6 class="text-white">Sales</h6>
+                            <h4 class="text-right text-white"><i class="feather icon-shopping-cart float-left"></i><span id="sales"></span></h4>
+                            <!-- <p class="m-b-0">Completed Orders<span class="float-right">351</span></p> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-2">
+                    <div class="card bg-c-green order-card">
+                        <div class="card-body">
+                            <h6 class="text-white">Total Orders</h6>
+                            <h4 class="text-right text-white"><i class="feather icon-tag float-left"></i><span id="orders"></span></h4>
+                            <!-- <p class="m-b-0">This Month<span class="float-right">213</span></p> -->
+                        </div>
+                    </div>
+                </div>
+                <!-- total-cash-card start -->
+                <div class="col-md-6 col-xl-2">
+                    <div class="card bg-c-yellow order-card">
+                        <div class="card-body">
+                            <h6 class="text-white">Total Cash</h6>
+                            <h4 class="text-right text-white"><i class="feather icon-shopping-cart float-left"></i><span id="cash"></span></h4>
+                            <!-- <p class="m-b-0">Completed Orders<span class="float-right">351</span></p> -->
+                        </div>
+                    </div>
+                </div>
+                <!-- total-debit-card start -->
+                <div class="col-md-6 col-xl-2">
+                    <div class="card bg-c-red order-card">
+                        <div class="card-body">
+                            <h6 class="text-white">Total Debit</h6>
+                            <h4 class="text-right text-white"><i class="feather icon-repeat float-left"></i><span id="debit"></span></h4>
+                            <!-- <p class="m-b-0">Completed Orders<span class="float-right">351</span></p> -->
+                        </div>
+                    </div>
+                </div>
+                <!--product-quantity-card start-->
+                <div class="col-md-6 col-xl-2">
+                    <div class="card bg-c-purple order-card">
+                        <div class="card-body">
+                            <h6 class="text-white">Product Quantity</h6>
+                            <h4 class="text-right text-white"><i class="feather icon-shopping-cart float-left"></i><span id="quantity"></span></h4>
+                            <!-- <p class="m-b-0">Completed Orders<span class="float-right">351</span></p> -->
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-md-12 col-xl-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Unique Visitor</h5>
+                        </div>
+                        <div class="card-body pl-0 pb-0">
+                            <div id="unique-visitor-chart"></div>
+                        </div>
+                    </div>
+                </div> -->
+           
+                <div class="col-md-12 col-xl-6">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body bg-patern">
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <span>Top Product</span>
+                                        </div>
+                                        <div class="col text-right">
+                                            <h2 class="mb-0">826</h2>
+                                            <span class="text-c-green">8.2%<i class="feather icon-trending-up ml-1"></i></span>
+                                        </div>
+                                    </div>
+                                    <div id="customer-chart"></div>
+                                    <div class="row mt-3">
+                                        <div class="col">
+                                            <h3 class="m-0"><i class="fas fa-circle f-10 m-r-5 text-success"></i>674</h3>
+                                            <span class="ml-3">New</span>
+                                        </div>
+                                        <div class="col">
+                                            <h3 class="m-0"><i class="fas fa-circle text-primary f-10 m-r-5"></i>182</h3>
+                                            <span class="ml-3">Return</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card bg-primary text-white">
+                                <div class="card-body bg-patern-white">
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <span>Top Category</span>
+                                        </div>
+                                        <div class="col text-right">
+                                            <h2 class="mb-0 text-white">826</h2>
+                                            <span class="text-white">8.2%<i class="feather icon-trending-up ml-1"></i></span>
+                                        </div>
+                                    </div>
+                                    <div id="customer-chart1"></div>
+                                    <div class="row mt-3">
+                                        <div class="col">
+                                            <h3 class="m-0 text-white"><i class="fas fa-circle f-10 m-r-5 text-success"></i>674</h3>
+                                            <span class="ml-3">New</span>
+                                        </div>
+                                        <div class="col">
+                                            <h3 class="m-0 text-white"><i class="fas fa-circle f-10 m-r-5 text-white"></i>182</h3>
+                                            <span class="ml-3">Return</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+  
+                <div class="col-lg-12">
+                        <div class="card-header">
+                            <!-- <div class="card-header-right">
+                                <div class="btn-group card-option">
+                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="feather icon-more-horizontal"></i>
+                                    </button>
+                                    <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
+                                        <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
+                                        <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
+                                        <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
+                                        <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
+                                    </ul>
+                                </div>
+                            </div> -->
+                            <!-- <ul class="nav nav-pills nav-fill mt-3 border-bottom pb-3" id="pills-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"><i class="feather icon-film m-r-5"></i> Entertainment</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="feather icon-file-text m-r-5"></i> CMS</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false"><i class="feather icon-mail m-r-5"></i> Mail</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-news-tab" data-toggle="pill" href="#pills-news" role="tab" aria-controls="pills-news" aria-selected="false"><i class="feather icon-monitor m-r-5"></i> Newslatter</a>
+                                </li>
+                            </ul> -->
+                        </div>
+            
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Daily Sales Amount Detail</h5>
+                                </div>
+                                <div class="card-body">
+
+                                    <canvas id="daily" width="800" height="200"></canvas>
+                                </div>
+                            </div>
+                        </div>    <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Weekly Sales Amount Detail</h5>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="weekly" width="800" height="200"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Monthly Sales Amount Detail</h5>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="monthly" width="800" height="200"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    
+                                    <h5>Yearly Sales Amount Detail</h5>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="yearly" width="800" height="200"></canvas>
+                                </div>
+                            </div>
+                        </div>
+         </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ <!-- Apex Chart -->
+<script src="/static/assets/js/plugins/apexcharts.min.js"></script>
+<!-- custom-chart js -->
+<script src="/static/assets/js/pages/dashboard-main.js"></script>
+<script>
+    
+
+    
+</script>
+<script>
+        
+async function getData(){
+        const api ="http://3.15.2.105:4200/api/store/"
+        const response = await fetch(api,{
+  method: 'POST',
+  headers: {
+        'Content-Type' : 'application/json'
+  },
+  body: JSON.stringify({
+        Store_ID:'114',
+        start_date: '2020-1-22',
+        end_date: '2022-5-10',
+        chain_id: '125'
+    })
+})
+        const barChartData = await response.json();
+        console.log(barChartData)
+         const date_daily = barChartData.daily_sales.map((x) => x.date)
+         const count_daily = barChartData.daily_sales.map((x) => x.count)
+         const date_weekly = barChartData.weekly_sales.map((x) => x.date)
+         const count_weekly = barChartData.weekly_sales.map((x) => x.count)
+         const date_monthly = barChartData.monthly_sales.map((x) => x.date)
+         const count_monthly = barChartData.monthly_sales.map((x) => x.count)
+         const date_yearly= barChartData.yearly_sales.map((x) => x.date)
+         const count_yearly = barChartData.yearly_sales.map((x) => x.count)
+         console.log(count_daily)
+         console.log(date_weekly)
+         count_daily_sales=count_daily
+         date_daily_sales=date_daily
+         count_weekly_sales=count_daily
+         date_weekly_sales=date_weekly
+         count_monthly_sales=count_daily
+         date_monthly_sales=date_daily
+         count_yearly_sales=count_daily
+         date_yearly_sales=date_daily
+        // const age = barChartData.data.map((x) => x.employee_age)
+        // const name = barChartData.data.map((x) => x.employee_name)
+        // console.log(salary,age,name)
+        // employee_label = name
+        // employee_salarydata = salary
+        // employee_agedata = age
+    }
+    getData()
+</script>
+
+<script>
+   
+
+           
+            // const  barChartData= await response.json();
+            // console.log(barChartData);
+            
+
+
+
+    var date_daily_sales=[];
+    var count_daily_sales=[];
+    async function getChartd() {
+await   getData()
+    let ctx1 = document.getElementById('daily').getContext('2d');
+    let daily = new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: date_daily_sales,
+            datasets: [{
+                label: '# of Votes',
+                data: count_daily_sales,
+                backgroundColor: [
+                    'Blue',
+                ],
+                borderColor: [
+                    'Blue',
+                ],
+                borderWidth: 0.4
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        },
+            
+    });}
+    getChartd()
+    
+    const dates=['2021-05-01','2021-05-02','2021-05-03','2021-05-04'];
+    const count=[1,2,3,4];   
+    const data= {
+            labels: dates,
+            datasets: [{
+                label: 'Sales',
+                data:  count,
+                backgroundColor: [
+                    'Blue',
+                ],
+                borderColor: [
+                    'Blue',
+                ],
+                borderWidth: 1
+            }]
+        };
+        const config = {
+            type: 'line',
+            data,
+            options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+         }
+        };
+  const weekly=new Chart(
+      document.getElementById('weekly'),config
+  );
+    var date_monthly_sales=[];
+    var count_monthly_sales=[];
+    async function getChartm() {
+        await   getData()
+    let ctx3 = document.getElementById('monthly').getContext('2d');
+    let monthly = new Chart(ctx3, {
+        type: 'line',
+        data: {
+            labels: date_monthly_sales,
+            datasets: [{
+                label:' Sales',
+                data: count_monthly_sales,
+                backgroundColor: [
+                    'Blue',
+                ],
+                borderColor: [
+                    'Blue',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });}
+    getChartm()
+   
+    let date_yearly_sales;
+    let  count_yearly_sales;
+    async function getChart() {
+        await   getData()
+
+    let ctx = document.getElementById('yearly').getContext('2d');
+    let yearly = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: date_yearly_sales,
+        datasets: [{
+            label: 'Sales',
+            data: count_yearly_sales,
+            backgroundColor: [
+                        'Blue'
+            ],
+            borderColor: [
+            'Blue'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+    
+    },
+});
+
+}
+getChart()
+// fetch('http://3.15.2.105:4200/api/store/',{
+//   method: 'POST',
+//   headers: {
+//         'Content-Type' : 'application/json'
+//   },
+//   body: JSON.stringify({
+//         Store_ID:'114',
+//         start_date: '2020-1-22',
+//         end_date: '2022-5-10'
+//     })
+// }).then(response => {
+//     return response.json()
+//    })
+//    .then(data => {console.log(data);
+//     document.querySelector('#sales').innerHTML = data.sales
+//     document.querySelector('#orders').innerHTML = data.total_order
+//     document.querySelector('#cash').innerHTML = data.total_cash
+//     document.querySelector('#debit').innerHTML = data.total_debit
+//     document.querySelector('#quantity').innerHTML = data.product_quantity    
+//                const date_daily= data.daily_sales.map( (x) => x.date)
+//                console.log(date_daily)
+//                const count_daily= data.daily_sales.map( (x) => x.count)
+//                console.log(count_daily)
+//                const date_weekly= data.weekly_sales.map( (x) => x.date)
+//                const count_weekly= data.weekly_sales.map( (x) => x.count)
+//                const date_monthly= data.monthly_sales.map( (x) => x.date)
+//                const count_monthly= data.monthly_sales.map( (x) => x.count)
+//              const date_yearly= data.yearly_sales.map( (x) => x.date)
+//                const count_yearly=data.yearly_sales.map( (x) => x.count)
+
+//  date_daily_sales =date_daily
+// console.log(date_daily_sales)
+//  count_daily_sales=count_daily
+//   count_weekly_sales=count_weekly
+//  date_monthly_sales=date_monthly
+//   count_monthly_sales=count_monthly
+//   date_yearly_sales=date_yearly
+//   count_yearly_sales=count_yearly
+// }
+//    )
+   
+
+    
+async function getData(){
+        const api ="http://3.15.2.105:4200/api/store/"
+        const response = await fetch(api,{
+  method: 'POST',
+  headers: {
+        'Content-Type' : 'application/json'
+  },
+  body: JSON.stringify({
+        Store_ID:'114',
+        start_date: '2020-1-22',
+        end_date: '2022-5-10'
+    })
+})
+        const barChartData = await response.json();
+         const date_daily = barChartData.daily_sales.map((x) => x.date)
+         const count_daily = barChartData.daily_sales.map((x) => x.count)
+         console.log(count_daily)
+
+         console.log(date_daily)
+        
+        // const age = barChartData.data.map((x) => x.employee_age)
+        // const name = barChartData.data.map((x) => x.employee_name)
+        // console.log(salary,age,name)
+        // employee_label = name
+        // employee_salarydata = salary
+        // employee_agedata = age
+    }
+
+        function filterData(){
+            const dates2=[...dates];
+            const startdate = document.getElementById('startdate');
+            const enddate = document.getElementById('enddate');
+            //get the index number in array
+            const indexstartdate =dates2.indexOf(startdate.value);
+            const indexenddate =dates2.indexOf(enddate.value);
+            //console.log(indexstartdate)
+            
+            //slice the array (pie) only showing the selected section
+            const filterDate= dates2.slice(indexstartdate,indexenddate+1);
+            //replace labels in chart
+            weekly.config.data.labels = filterDate;
+            //console.log(weekly.config.data.labels)
+            weekly.update();
+        }
+    </script> 
+    <script>
+        async function getDatas(){
+        const api ="http://dummy.restapiexample.com/api/v1/employees"
+         const response = await fetch(api)
+        const barChartData = await response.json();
+         console.log(barChartData)
+         const salary = barChartData.data.map((x)=>x.employees.employee_age);
+         console.log(salary)
+         const age = barChartData.data.map((x) => x.employee_age)
+         const name = barChartData.data.map((x) => x.employee_name)
+         employee_label = name
+         employee_salarydata = salary
+         employee_agedata = age
+     }
+     getDatas()
+    </script>
+
+    
+{% endblock javascripts %}
