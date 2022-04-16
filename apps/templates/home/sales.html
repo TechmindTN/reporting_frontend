@@ -334,7 +334,7 @@ async function getData(){
             labels: date_daily_sales,
             datasets: [{
                 id:chain,
-                label: '# of Votes',
+                label: 'Sales',
                 data: count_daily_sales,
                 backgroundColor: [
                     'Blue',
@@ -449,7 +449,7 @@ async function getData(){
 // }
 // getChart()
 
- fetch('http://3.15.2.105:4200/api/store/',{
+ fetch('http://3.15.2.105/api/store/',{
 //
    method: 'POST',
 // 
@@ -513,7 +513,7 @@ document.querySelector('#quantity').innerHTML = data.product_quantity
 
     
 async function getData(){
-        const api ="http://3.15.2.105:4200/api/store/"
+        const api ="http://3.15.2.105/api/store/"
         const response = await fetch(api,{
   method: 'POST',
   headers: {
