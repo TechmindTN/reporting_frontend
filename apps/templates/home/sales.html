@@ -318,10 +318,10 @@ async function getData(){
 
 
 
-    var date_daily_sales=[];
-    var count_daily_sales=[];
-    async function getChartd() {
-await   getData()
+   const date_daily_sales=['2021-05-01','2021-05-02','2021-05-03','2021-05-04'];
+    const count_daily_sales=[22,25,10,11];
+//     async function getChartd() {
+// await   getData()
     let ctx1 = document.getElementById('daily').getContext('2d');
     let daily = new Chart(ctx1, {
         type: 'line',
@@ -347,8 +347,9 @@ await   getData()
             }
         },
             
-    });}
-    getChartd()
+     });
+//}
+    // getChartd()
     
     const dates=['2021-05-01','2021-05-02','2021-05-03','2021-05-04'];
     const count=[1,2,3,4];   
@@ -440,25 +441,44 @@ await   getData()
 
 }
 getChart()
-// fetch('http://3.15.2.105:4200/api/store/',{
-//   method: 'POST',
-//   headers: {
-//         'Content-Type' : 'application/json'
-//   },
-//   body: JSON.stringify({
-//         Store_ID:'114',
-//         start_date: '2020-1-22',
-//         end_date: '2022-5-10'
-//     })
-// }).then(response => {
-//     return response.json()
-//    })
-//    .then(data => {console.log(data);
-//     document.querySelector('#sales').innerHTML = data.sales
-//     document.querySelector('#orders').innerHTML = data.total_order
-//     document.querySelector('#cash').innerHTML = data.total_cash
-//     document.querySelector('#debit').innerHTML = data.total_debit
-//     document.querySelector('#quantity').innerHTML = data.product_quantity    
+//
+ fetch('http://3.15.2.105:4200/api/store/',{
+//
+   method: 'POST',
+// 
+  headers: {
+// 
+        'Content-Type' : 'application/json'
+// 
+  },
+//  
+ body: JSON.stringify({
+//  
+       Store_ID:'114',
+//    
+     start_date: '2020-1-22',
+//  
+       end_date: '2022-5-10'
+//   
+  })
+//
+ }).then(response => {
+//    
+ return response.json()
+//   
+ })
+//    
+.then(data => {console.log(data);
+//   
+  document.querySelector('#sales').innerHTML = data.sales
+//    
+ document.querySelector('#orders').innerHTML = data.total_order
+//     
+document.querySelector('#cash').innerHTML = data.total_cash
+//     
+document.querySelector('#debit').innerHTML = data.total_debit
+//     
+document.querySelector('#quantity').innerHTML = data.product_quantity    
 //                const date_daily= data.daily_sales.map( (x) => x.date)
 //                console.log(date_daily)
 //                const count_daily= data.daily_sales.map( (x) => x.count)
@@ -478,8 +498,10 @@ getChart()
 //   count_monthly_sales=count_monthly
 //   date_yearly_sales=date_yearly
 //   count_yearly_sales=count_yearly
-// }
-//    )
+// 
+}
+//   
+ )
    
 
     
@@ -496,7 +518,7 @@ async function getData(){
         end_date: '2022-5-10'
     })
 })
-        const barChartData = await response.json();
+         const barChartData = await response.json();
          const date_daily = barChartData.daily_sales.map((x) => x.date)
          const count_daily = barChartData.daily_sales.map((x) => x.count)
          console.log(count_daily)
@@ -513,17 +535,26 @@ async function getData(){
 
         function filterData(){
             const dates2=[...dates];
+            const dates3=[...date_daily_sales]
+            //console.log(dates3)
+            //console.log(dates2)
             const startdate = document.getElementById('startdate');
             const enddate = document.getElementById('enddate');
             //get the index number in array
             const indexstartdate =dates2.indexOf(startdate.value);
             const indexenddate =dates2.indexOf(enddate.value);
+            const indexstartdate2=dates3.indexOf(startdate);
+            const indexenddate2 =dates3.indexOf(enddate.value);
             //console.log(indexstartdate)
             
             //slice the array (pie) only showing the selected section
             const filterDate= dates2.slice(indexstartdate,indexenddate+1);
+            const filterDate2= dates3.slice(indexstartdate,indexenddate+1);
+
             //replace labels in chart
             weekly.config.data.labels = filterDate;
+            daily.data.labels = filterDate;
+console.log(daily.data.labels)
             //console.log(weekly.config.data.labels)
             weekly.update();
         }
