@@ -1,0 +1,440 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}	
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-content">
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">Chain List</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="#!">Shop</a></li>
+                                <li class="breadcrumb-item"><a href="#!">Chains </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ breadcrumb ] start -->
+                    <div class="row align-items-center">
+
+                        <div class="col-sm-4">
+                            <div class="input-group rounded">
+                                <input type="search"  id="filterinput" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                                <span class="input-group-text border-0" id="search-addon">
+                                  <i class="fas fa-search"></i>
+                                </span>
+                              </div>
+                        </div>	
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <select class="custom-select" id="inputGroupSelect01">
+                                    <option selected>Store</option>
+                                    
+                                    <option value="2"><p id="store"></p></option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+               
+            <br><br><br>
+            <!-- [ Main Content ] start -->
+            <div class="row">
+               
+    <!-- [ basic-table ] start -->
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class=" col-md-2 ml-md-auto">Chain Detail</h5>
+                <div class=" col-md-2 ml-md-auto">
+                    <!--		Show Numbers Of Rows 		-->
+                    <select class="form-control" name="state" id="maxRows">
+                      <option value="5000">Show ALL Rows</option>
+                      <option value="5">5</option>
+                      <option value="10">10</option>
+                      <option value="15">15</option>
+                      <option value="20">20</option>
+                      <option value="50">50</option>
+               
+                    </select>
+                
+                  </div>
+            </div>
+            <div class="card-body table-border-style">
+              
+                <div class="table-responsive text-center">
+                    <table id="chains" class="item table table-hover text-center">
+                <!-- Here a loader is created which 
+                 loads till response comes -->
+          
+            
+                    </table>
+                    <div class='pagination-container' > 
+                        <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                        <li data-page="prev" class="page-item"><a class="page-link">
+                        <span> &laquo;<span class=" page-item sr-only">(current)</span></span>
+                        </a></li>
+                        <!--	Here the JS Function Will Add the Rows -->
+                        <li  data-page="next" id="prev" class="page-item"><a class="page-link">
+                        <span> &raquo;<span class=" page-item sr-only">(current)</span></span>
+                        </a></li>
+                        </ul>
+                        </nav>  
+                        </div> 
+                       
+                </div>
+                <div class="  table-responsive text-center align-items-center">
+                    <table class="item table table-hover text-center">
+                       
+               </table>
+
+                        <div class="category"> </div> 
+                    
+                      <div class='pagination-container' > 
+                          <nav aria-label="Page navigation example">
+                          <ul class="pagination">
+                          <li data-page="prev" class="page-item"><a class="page-link">
+                          <span> &laquo;<span class=" page-item sr-only">(current)</span></span>
+                          </a></li>
+                          <!--	Here the JS Function Will Add the Rows -->
+                          <li  data-page="next" id="prev" class="page-item"><a class="page-link">
+                          <span> &raquo;<span class=" page-item sr-only">(current)</span></span>
+                          </a></li>
+                          </ul>
+                          </nav>  
+                          </div> 
+                         
+                   <!-- Here a loader is created which 
+                   loads till response comes -->
+            
+              
+                    
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>  
+{% endblock content %}
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+    <!-- Apex Chart -->
+    <script src="/static/assets/js/plugins/apexcharts.min.js"></script>
+    <!-- custom-chart js -->
+    <script src="/static/assets/js/pages/dashboard-main.js"></script>
+<!-- <script>
+function getlistchains(){
+fetch('http://3.15.2.105/api/store/chain_list/',{
+method: 'POST',
+headers: {
+       'Content-Type' : 'application/json' 
+  },
+body: JSON.stringify({
+  
+Store_ID:'112', 
+})
+
+})
+.then(response => {return response;
+})
+.then(data => { console.log(data);
+    const name =data.map(data => {return `<p>${data.chain_name}</p>`}).join('<br> ')
+     const id = data.map(data =>{return `<p> ${data.id}</p>`})
+     const store_id = data.map(data =>{return `<p> ${data.store_id}</p>`})
+     const chain_img = data.map(data =>{return `<p> ${data.chain_img}</p>`})
+     const details=`<button type="button" class="btn  btn-icon btn-primary" data-toggle="modal" data-target="#exampleModalCenter"><i class="feather icon-list"></i></button>`
+     document.querySelector('#chains').innerHTML=`<tr> <td>${chain_img}</td> <td>${id}</td><td>${name}</td> <td>${store_id}</td><td>${details}</td> </tr> `
+   console.log(name)
+})
+
+    
+}
+
+getlistchains();
+
+</script> -->
+<script>
+    getPagination('#chains');
+               //getPagination('.table-class');
+               //getPagination('table');
+
+     /*					PAGINATION 
+     - on change max rows select options fade out all rows gt option value mx = 5
+     - append pagination list as per numbers of rows / max rows option (20row/5= 4pages )
+     - each pagination li on click -> fade out all tr gt max rows * li num and (5*pagenum 2 = 10 rows)
+     - fade out all tr lt max rows * li num - max rows ((5*pagenum 2 = 10) - 5)
+     - fade in all tr between (maxRows*PageNum) and (maxRows*pageNum)- MaxRows 
+     */
+    
+
+function getPagination(table) {
+var lastPage = 1;
+
+$('#maxRows')
+.on('change', function(evt) {
+ //$('.paginationprev').html('');						// reset pagination
+
+lastPage = 1;
+ $('.pagination')
+   .find('li')
+   .slice(1, -1)
+   .remove();
+ var trnum = 0; // reset tr counter
+ var maxRows = parseInt($(this).val()); // get Max Rows from select option
+
+ if (maxRows == 5000) {
+   $('.pagination').hide();
+ } else {
+   $('.pagination').show();
+ }
+
+ var totalRows = $(table + ' tbody tr').length; // numbers of rows
+ $(table + ' tr:gt(0)').each(function() {
+   // each TR in  table and not the header
+   trnum++; // Start Counter
+   if (trnum > maxRows) {
+     // if tr number gt maxRows
+
+     $(this).hide(); // fade it out
+   }
+   if (trnum <= maxRows) {
+     $(this).show();
+   } // else fade in Important in case if it ..
+ }); //  was fade out to fade it in
+ if (totalRows > maxRows) {
+   // if tr total rows gt max rows option
+   var pagenum = Math.ceil(totalRows / maxRows); // ceil total(rows/maxrows) to get ..
+   //	numbers of pages
+   for (var i = 1; i <= pagenum; ) {
+     // for each page append pagination li
+     $('.pagination #prev')
+       .before(
+         '<li class="page-item page-link" data-page="' +
+           i +
+           '">\
+                             <span>' +
+           i++ +
+           '<span class="sr-only ">(current)</span></span>\
+                           </li>'
+       )
+       .show();
+   } // end for i
+ } // end if row count > max rows
+ $('.pagination [data-page="1"]').addClass('active'); // add active class to the first li
+ $('.pagination li').on('click', function(evt) {
+   // on click each page
+   evt.stopImmediatePropagation();
+   evt.preventDefault();
+   var pageNum = $(this).attr('data-page'); // get it's number
+
+   var maxRows = parseInt($('#maxRows').val()); // get Max Rows from select option
+
+   if (pageNum == 'prev') {
+     if (lastPage == 1) {
+       return;
+     }
+     pageNum = --lastPage;
+   }
+   if (pageNum == 'next') {
+     if (lastPage == $('.pagination li').length - 2) {
+       return;
+     }
+     pageNum = ++lastPage;
+   }
+
+   lastPage = pageNum;
+   var trIndex = 0; // reset tr counter
+   $('.pagination li').removeClass('active'); // remove active class from all li
+   $('.pagination [data-page="' + lastPage + '"]').addClass('active'); // add active class to the clicked
+   // $(this).addClass('active');					// add active class to the clicked
+     limitPagging();
+   $(table + ' tr:gt(0)').each(function() {
+     // each tr in table not the header
+     trIndex++; // tr index counter
+     // if tr index gt maxRows*pageNum or lt maxRows*pageNum-maxRows fade if out
+     if (
+       trIndex > maxRows * pageNum ||
+       trIndex <= maxRows * pageNum - maxRows
+     ) {
+       $(this).hide();
+     } else {
+       $(this).show();
+     } //else fade in
+   }); // end of for each tr in table
+ }); // end of on click pagination list
+ limitPagging();
+})
+.val(5000)
+.change();
+
+// end of on select change
+
+// END OF PAGINATION
+}
+
+function limitPagging(){
+// alert($('.pagination li').length)
+
+if($('.pagination li').length > 7 ){
+       if( $('.pagination li.active').attr('data-page') <= 3 ){
+       $('.pagination li:gt(5)').hide();
+       $('.pagination li:lt(5)').show();
+       $('.pagination [data-page="next"]').show();
+   }if ($('.pagination li.active').attr('data-page') > 3){
+       $('.pagination li:gt(0)').hide();
+       $('.pagination [data-page="next"]').show();
+       for( let i = ( parseInt($('.pagination li.active').attr('data-page'))  -2 )  ; i <= ( parseInt($('.pagination li.active').attr('data-page'))  + 2 ) ; i++ ){
+           $('.pagination [data-page="'+i+'"]').show();
+
+       }
+
+   }
+}
+}
+
+$(function() {
+// Just to append id number for each row
+//$('table tr:eq(0)').prepend('<thead><th style="width:35%"> Image  </th> <th style="width:35%"> ID </th> <th style="width:36%"> Name </th><th style="width:36%"> Store </th> </thead>');
+
+//var id = 0;
+
+// $('table tr:gt(0)').each(function() {
+// id++;
+// $(this).prepend('<td>' + id + '</td>');
+// });
+});
+</script>
+<script>
+        // api url
+const api_url = 
+      "http://3.15.2.105/api/store/chain_list/";
+  
+// Defining async function
+async function getapi(url) {
+    
+    // Storing response
+    const response = await fetch(url,{
+        method: 'POST',
+        headers: {
+               'Content-Type' : 'application/json' 
+          },
+        body: JSON.stringify({
+          
+        Store_ID:'112', 
+       
+        })
+        
+        });
+    
+    // Storing data in form of JSON
+    var data = await response.json();
+    console.log(data);
+ 
+    show(data);
+}
+// Calling that async function
+getapi(api_url);
+  
+
+// Function to define innerHTML for HTML table
+function show(data) {
+    let tab = 
+        ` <thead><tr>
+          <th>Image</th>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Store</th>
+         </tr><thead/>`;
+    
+    // Loop to access all rows 
+    for (let r of data) {
+        if (r.chain_img==null)
+        {r.chain_img="../../static/assets/images/00.png";
+    }
+        tab += `<tr> 
+    <td><img alt="img "class="img-fluid wid-75" src=${r.chain_img}></td> 
+    <td>${r.id} </td>
+    <td>${r.chain_name}</td>
+    <td>${r.store_id}</td>
+    
+    </tr> `;
+    }
+    // Setting innerHTML as tab variable
+    document.getElementById("chains").innerHTML = tab;
+}
+</script>
+<script>
+         function addElement(appendIn, value){
+            let table=document.createElement('table')
+            table.className=" item table table-hover text-center"
+            let{img_url,id,category_name}=value;
+           
+            table.innerHTML=`
+            <td  style="width:30%" ><img alt="img" class=" img_url img-fluid wid-75 text-center" src=${chain_img}></td> 
+            <td  style="width:30%"class="id">${id} </td>
+            <td  style="width:32%"class="category_name">${chain_name}</td>
+            <td  style="width:32%"class="category_name">${store_id}</td>
+            </tr> `
+      appendIn.appendChild(table);
+      }
+    grid=document.querySelector('#chains')
+    filterinput.addEventListener('keyup',filteritems)
+    function filteritems(){
+          // remove all the childs from the current element
+    while(grid.childNodes.length > 1 ){
+        grid.removeChild(grid.lastChild)
+    }
+
+        fetch("http://3.15.2.105/api/store/chain_list/",{
+        method: 'POST',
+        headers: {
+               'Content-Type' : 'application/json' 
+          },
+        body: JSON.stringify({
+          
+        Store_ID:'112', 
+        start_date :'2022-1-20',
+        end_date:'2022-4-20'
+        })
+        
+        }).then(res=>res.json())
+        .then(json=>{ const data=json.categories
+            let filterValue=filterinput.value.toUpperCase();
+            let filterData= match(data,'category_name',filterValue)
+
+            for(const value of filterData){
+                for (let r of data) {
+        if (r.img_url==null)
+        {r.img_url="../../static/assets/images/00.png";
+
+    }}
+                addElement(grid,value)
+            }
+        })
+        
+    }
+  // match
+    const match = (values, filterby, input) => {
+    const p = Array.from(input).reduce((a, v, i) => `${a}[^${input.substr(i)}]*?${v}`, '');
+    const re = RegExp(p);
+
+    return values.filter(v => v[filterby].toUpperCase().match(re))
+}
+</script>
+</script>
+{% endblock javascripts %}

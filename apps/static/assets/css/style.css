@@ -92,6 +92,20 @@ File: style.css
 /*
  * Container style
  */
+ .pagination li:hover{
+    cursor: pointer;
+}
+.paginationn li:hover{
+    cursor: pointer;
+}
+ .payment{}
+ .category{    
+ }
+ .itemsategory{
+}
+.a {    }
+.b{    }
+.c{   }
 .ps {
     overflow: hidden !important;
     overflow-anchor: none;
@@ -2032,7 +2046,7 @@ pre code {
 .table-info tbody + tbody {
     border-color: #7adce9;
 }
-
+.pg {}
 .table-hover .table-info:hover {
     background-color: #a2e6ef;
 }
@@ -5295,7 +5309,13 @@ input[type="button"].btn-block {
     list-style: none;
     border-radius: 5px;
 }
-
+.paginationn {
+    display: -webkit-box;
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 5px;
+}
 .page-link {
     position: relative;
     display: block;
@@ -5352,6 +5372,7 @@ input[type="button"].btn-block {
     font-size: 1.25rem;
     line-height: 1.5;
 }
+
 
 .pagination-lg .page-item:first-child .page-link {
     border-top-left-radius: 5px;
@@ -26136,6 +26157,11 @@ table.dataTable.fixedHeader-floating {
 .footable .pagination > li > span {
     color: #222;
 }
+.footable .paginationn > li > a,
+.footable .paginationn > li > span {
+    color: #222;
+}
+
 
 .footable-details.table,
 .footable.table {

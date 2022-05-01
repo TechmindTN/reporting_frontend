@@ -1,0 +1,517 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}	
+
+	<!-- [ Main Content ] start -->
+	<div class="pcoded-main-container">
+		<div class="pcoded-content">
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">Orders List</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="#!">Sales Management</a></li>
+                                <li class="breadcrumb-item"><a href="#!">Orders List</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+			<!-- [ Main Content ] start -->
+			<div class="row">
+				<!-- [ sample-page ] start -->
+				<div class="col-sm-4">
+                    <div class="input-group rounded">
+                        <input type="search" id="filterinput" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                        <span class="input-group-text border-0" id="search-addon">
+                          <i class="fas fa-search"></i>
+                        </span>
+                      </div>
+				</div>	
+                <div class="col-sm-4">
+                    <div class="input-group mb-3">
+                        <select class="custom-select" id="inputGroupSelect01">
+                            <option selected>Choose...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+				</div>
+                <div class="col-sm-4 card-body text-right">
+                    <button type="button" class="btn btn-outline-primary"><i class="feather mr-2 icon-arrow-up"></i>Export</button>
+                    <button type="button" class="btn btn-outline-primary"><i class="feather mr-2 icon-arrow-down"></i>Import</button>
+                </div>  
+                         
+              
+                <br><br><br>
+                 <!-- [ basic-table ] start -->
+
+            <div class="col-md-12">
+                <div class="card">
+                            <br>        
+                    <div class="card-header">
+                      <div class="row justify-content-between">
+                        <h5 class="col-4">Orders Details</h5>
+                        <div class=" col-md-2 ml-md-auto">
+                          <!--		Show Numbers Of Rows 		-->
+                          <select class="form-control" name="state" id="maxRows">
+                            <option value="5000">Show ALL Rows</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="70">70</option>
+                            <option value="100">100</option>
+                          </select>
+                      
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body table-border-style">
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border" 
+                                 role="status" id="loading">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="table-responsive text-center">
+                          <table style="width:100%" class="item table table-hover text-center">
+                            <thead><th  > order_number</th> <th width="50%"> payment_amount </th> <th style="width:150px">order_payment</th><th style="width:150px" >payment_date</th><th style="width:150px" >Discount</th><th style="width:150px">member_price</th><th style="width:150px" >payment_method</th><th style="width:150px" >vip_point</th><th style="">paid</th><th  style="" >product_Qty</th></thead>
+                     </table>
+                            <div  class=" category ">
+
+                            </div>
+                           
+
+                             <div class='pagination-container' > 
+                            <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                            <li data-page="prev" class="page-item"><a class="page-link">
+                            <span> &laquo;<span class=" page-item sr-only">(current)</span></span>
+                            </a></li>
+                            <!--	Here the JS Function Will Add the Rows -->
+                            <li  data-page="next" id="prev" class="page-item"><a class="page-link">
+                            <span> &raquo;<span class=" page-item sr-only">(current)</span></span>
+                            </a></li>
+                            </ul>
+                            </nav>  
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+			<!-- [ Main Content ] end -->
+		</div>
+ 
+	</div>
+	<!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+    <!-- Apex Chart -->
+    <script src="/static/assets/js/plugins/apexcharts.min.js"></script>
+    <!-- custom-chart js -->
+    <script src="/static/assets/js/pages/dashboard-main.js"></script>
+  
+    <script>
+         getPagination('.category');
+					//getPagination('.table-class');
+					//getPagination('table');
+
+		  /*					PAGINATION 
+		  - on change max rows select options fade out all rows gt option value mx = 5
+		  - append pagination list as per numbers of rows / max rows option (20row/5= 4pages )
+		  - each pagination li on click -> fade out all tr gt max rows * li num and (5*pagenum 2 = 10 rows)
+		  - fade out all tr lt max rows * li num - max rows ((5*pagenum 2 = 10) - 5)
+		  - fade in all tr between (maxRows*PageNum) and (maxRows*pageNum)- MaxRows 
+		  */
+		 
+
+function getPagination(table) {
+  var lastPage = 1;
+
+  $('#maxRows')
+    .on('change', function(evt) {
+      //$('.paginationprev').html('');						// reset pagination
+
+     lastPage = 1;
+      $('.pagination')
+        .find('li')
+        .slice(1, -1)
+        .remove();
+      var trnum = 0; // reset tr counter
+      var maxRows = parseInt($(this).val()); // get Max Rows from select option
+
+      if (maxRows == 5000) {
+        $('.pagination').hide();
+      } else {
+        $('.pagination').show();
+      }
+
+      var totalRows = $(table + ' tbody tr').length; // numbers of rows
+      $(table + ' tr:gt(0)').each(function() {
+        // each TR in  table and not the header
+        trnum++; // Start Counter
+        if (trnum > maxRows) {
+          // if tr number gt maxRows
+
+          $(this).hide(); // fade it out
+        }
+        if (trnum <= maxRows) {
+          $(this).show();
+        } // else fade in Important in case if it ..
+      }); //  was fade out to fade it in
+      if (totalRows > maxRows) {
+        // if tr total rows gt max rows option
+        var pagenum = Math.ceil(totalRows / maxRows); // ceil total(rows/maxrows) to get ..
+        //	numbers of pages
+        for (var i = 1; i <= pagenum; ) {
+          // for each page append pagination li
+          $('.pagination #prev')
+            .before(
+              '<li class="page-item page-link" data-page="' +
+                i +
+                '">\
+								  <span>' +
+                i++ +
+                '<span class="sr-only ">(current)</span></span>\
+								</li>'
+            )
+            .show();
+        } // end for i
+      } // end if row count > max rows
+      $('.pagination [data-page="1"]').addClass('active'); // add active class to the first li
+      $('.pagination li').on('click', function(evt) {
+        // on click each page
+        evt.stopImmediatePropagation();
+        evt.preventDefault();
+        var pageNum = $(this).attr('data-page'); // get it's number
+
+        var maxRows = parseInt($('#maxRows').val()); // get Max Rows from select option
+
+        if (pageNum == 'prev') {
+          if (lastPage == 1) {
+            return;
+          }
+          pageNum = --lastPage;
+        }
+        if (pageNum == 'next') {
+          if (lastPage == $('.pagination li').length - 2) {
+            return;
+          }
+          pageNum = ++lastPage;
+        }
+
+        lastPage = pageNum;
+        var trIndex = 0; // reset tr counter
+        $('.pagination li').removeClass('active'); // remove active class from all li
+        $('.pagination [data-page="' + lastPage + '"]').addClass('active'); // add active class to the clicked
+        // $(this).addClass('active');					// add active class to the clicked
+	  	limitPagging();
+        $(table + ' tr:gt(0)').each(function() {
+          // each tr in table not the header
+          trIndex++; // tr index counter
+          // if tr index gt maxRows*pageNum or lt maxRows*pageNum-maxRows fade if out
+          if (
+            trIndex > maxRows * pageNum ||
+            trIndex <= maxRows * pageNum - maxRows
+          ) {
+            $(this).hide();
+          } else {
+            $(this).show();
+          } //else fade in
+        }); // end of for each tr in table
+      }); // end of on click pagination list
+	  limitPagging();
+    })
+    .val(5)
+    .change();
+
+  // end of on select change
+
+  // END OF PAGINATION
+}
+
+function limitPagging(){
+	// alert($('.pagination li').length)
+
+	if($('.pagination li').length > 7 ){
+			if( $('.pagination li.active').attr('data-page') <= 3 ){
+			$('.pagination li:gt(5)').hide();
+			$('.pagination li:lt(5)').show();
+			$('.pagination [data-page="next"]').show();
+		}if ($('.pagination li.active').attr('data-page') > 3){
+			$('.pagination li:gt(0)').hide();
+			$('.pagination [data-page="next"]').show();
+			for( let i = ( parseInt($('.pagination li.active').attr('data-page'))  -2 )  ; i <= ( parseInt($('.pagination li.active').attr('data-page'))  + 2 ) ; i++ ){
+				$('.pagination [data-page="'+i+'"]').show();
+
+			}
+
+		}
+	}
+}
+
+// $(function() {
+//   // Just to append id number for each row
+//   $('table tr:eq(0)').prepend('<th> ID </th>');
+
+//   var id = 0;
+
+//   $('table tr:gt(0)').each(function() {
+//     id++;
+//     $(this).prepend('<td>' + id + '</td>');
+//   });
+// });
+    </script>
+    <script>
+//         function getlistorders(){
+//         fetch('http://3.15.2.105/api/store/orders_list/',{
+//         method: 'POST',
+//         headers: {
+//                'Content-Type' : 'application/json' 
+//           },
+//         body: JSON.stringify({
+          
+//         Store_ID:'112', 
+//         start_date :'2022-1-20',
+//         end_date:'2022-4-20'
+//         })
+        
+//         })
+//         .then(response => {return response.json();
+    
+//         })
+//         .then(data => {
+//         //console.log(data)
+//         const order_number =data.map(data => {return `<p>${data.order_number}</p>`}).join('<br> ')
+//         const chain_id =data.map(data => {return `<p>${data.chain_id}</p>`}).join('<br> ')
+//         const cachier_id =data.map(data => {return `<p>${data.cachier_id}</p>`}).join('<br> ')
+//         const payment_method_id =data.map(data => {return `<p>${data.payment_method_id}</p>`}).join('<br> ')
+//         const discount_amount =data.map(data => {return `<p>${data.discount_amount}</p>`}).join('<br> ')
+//         const payment_amount =data.map(data => {return `<p>${data.payment_amount}</p>`}).join('<br> ')
+//         const member_price =data.map(data => {return `<p>${data.member_price}</p>`}).join('<br> ')
+//         const payment_date =data.map(data => {return `<p>${data.payment_date}</p>`}).join('<br> ')
+//         const store_id =data.map(data => {return `<p>${data.store_id}</p>`}).join('<br> ')
+//         const order_payment_amount =data.map(data => {return `<p>${data.order_payment_amount}</p>`}).join('<br> ')
+//         const vip_point =data.map(data => {return `<p>${data.vip_point}</p>`}).join('<br> ')
+//         const product_quantity =data.map(data => {return `<p>${data.product_quantity}</p>`}).join('<br> ')
+//         const is_paid =data.map(data => {return `<p>${data.is_paid}</p>`}).join('<br> ')
+//         what();
+//             function what(){
+//               document.getElementById('#orders').innerHTML=`<tr> <td>${order_number}</td> <td>${chain_id}</td> <td>${cachier_id}</td><td>${store_id}</td><td>${payment_amount}</td><td>${order_payment_amount}</td><td>${payment_date}</td><td>${discount_amount}</td><td>${member_price}</td><td>${payment_method_id}</td><td>${vip_point}</td><td>${product_quantity}</td><td>${is_paid}</td><td><button type="button" class="btn  btn-icon btn-primary" data-toggle="modal" data-target="#exampleModalCenter"><i class="feather icon-list"></i></button></td> </tr><hr/>`
+
+//             };
+//         })
+//     }
+// getlistorders();
+
+</script>
+<script>
+    // api url
+const api_url = 
+      "http://3.15.2.105/api/store/orders_list/";
+  
+// Defining async function
+// async function getapi(url) {
+    
+//     // Storing response
+//     const response = await fetch(url,{
+//         method: 'POST',
+//         headers: {
+//                'Content-Type' : 'application/json' 
+//           },
+//         body: JSON.stringify({
+          
+//         Store_ID:'112', 
+//         start_date :'2022-1-20',
+//         end_date:'2022-4-20'
+//         })
+        
+//         });
+    
+    // Storing data in form of JSON
+ //   var data = await response.json();
+    //console.log(data);
+//     if (response) {
+//         hideloader();
+//     }
+//     show(data); 
+// }
+// Calling that async function
+// getapi(api_url);
+  
+// Function to hide the loader
+// function hideloader() {
+//     document.getElementById('loading').style.display = 'none';
+
+// }
+// Function to define innerHTML for HTML table
+// function show(data) {
+//     let tab = 
+//         `<thead >
+//                                         <tr>
+//                                             <th>Order number </th>
+//                                             <th>Chain id</th>
+//                                             <th>Cachier id</th>
+//                                             <th>Store id </th>
+//                                             <th>Payment amount </th>
+//                                             <th>Order Payment amount </th>
+//                                             <th>Payment date</th>
+//                                             <th>Discount amount </th>
+//                                             <th>Member Price  </th>
+//                                             <th>Payment methods</th>
+//                                             <th>VIP Point</th>
+//                                             <th>Product quantity</th>
+//                                             <th>Paid</th>
+//                                             <th>Details</th>
+//                                         </tr>
+//                                     </thead>`;
+//     // Loop to access all rows 
+//     for (let r of data) {
+//          if (r.is_paid==1)
+//          {r.is_paid="paid";
+
+//     }
+
+//     tab += `<tr> 
+//     <td>${r.order_number}</td> 
+//     <td>${r.chain_id} </td>
+//     <td>${r.cachier_id}</td>
+//     <td>${r.store_id}</td>
+//     <td>${r.payment_amount}</td>
+//     <td>${r.order_payment_amount}</td>
+//     <td>${r.payment_date}</td>
+//     <td>${r.discount_amount}</td>
+//     <td>${r.member_price}</td>
+//     <td>${r.payment_method_id}</td>
+//     <td>${r.vip_point}</td>
+//     <td>${r.is_paid}</td>
+//     <td>${r.product_quantity}</td>
+//    <td><button type="button" class="btn  btn-icon btn-primary" data-toggle="modal" data-target="#exampleModalCenter"><i class="feather icon-list"></i></button></td>
+    
+//     </tr> `;
+//     }
+//     // Setting innerHTML as tab variable
+//     //document.getElementById("orderss").innerHTML = tab;
+
+
+// }
+
+</script>
+<script>
+  // Function to hide the loader
+ function hideloader() {
+     document.getElementById('loading').style.display = 'none';
+ }
+  fetch("http://3.15.2.105/api/store/orders_list/",{
+        method: 'POST',
+        headers: {
+               'Content-Type' : 'application/json' 
+          },
+        body: JSON.stringify({
+          
+        Store_ID:'112', 
+        start_date :'2022-1-20',
+        end_date:'2022-4-20'
+        })
+        
+        }).then(res=>res.json())
+        .then(json=>{
+            const data=json
+            for (let r of data) {
+        if (r.is_paid==1)
+        {r.is_paid="paid";
+    }
+  else{r.is_paid="unpaid"}}
+            for(let value of data){
+              if (json) {
+         hideloader();
+     } 
+    
+  addElement(grid,value); 
+ }
+
+            
+        
+        });
+          function addElement(appendIn, value){
+            let div=document.createElement('table')
+            div.className="  category"
+            let{order_number,payment_amount,order_payment_amount,payment_date,discount_amount,member_price,payment_method_id,vip_point,is_paid,product_quantity}=value;
+          
+            div.innerHTML=`<tr class="item table table-hover text-center""> 
+              <td class="category" >${order_number}</td> 
+
+    <td style="width:10%" class="id">${payment_amount}</td>
+    <td   style="width:10%" class="id">${order_payment_amount}</td>
+    <td   style="width:10%" class="id">${payment_date}</td>
+    <td  style="width:10%" class="id">${discount_amount}</td>
+    <td  style="width:10%" class="id">${member_price}</td>
+    <td   style="width:10%" class="id">${payment_method_id}</td>
+    <td   style="width:10%" class="id">${vip_point}</td>
+    <td  style="width:10%" class="id">${is_paid}</td>
+    <td  style="width:10%" class="id">${product_quantity}</td>
+    </tr> `
+      appendIn.appendChild(div);
+      }
+</script>
+<script>
+    let grid=document.querySelector('.category')
+    console.log(grid)
+    filterinput.addEventListener('keyup',filteritems)
+    function filteritems(){
+          // remove all the childs from the current element
+    while(grid.childNodes.length > 1 ){
+        grid.removeChild(grid.lastChild)
+      
+    }
+
+        fetch("http://3.15.2.105/api/store/orders_list/",{
+        method: 'POST',
+        headers: {
+               'Content-Type' : 'application/json' 
+          },
+        body: JSON.stringify({
+          
+        Store_ID:'112', 
+        start_date :'2022-1-20',
+        end_date:'2022-4-20'
+        })
+        
+        })
+        .then(res=>res.json())
+        .then(json=>{ const data=json
+            let filterValue=filterinput.value;
+            let filterData= match(data,'order_number',filterValue)
+
+            for(const value of filterData){
+     
+                addElement(grid,value)
+            }
+        })
+        
+  // match
+    const match = (values, filterby, input) => {
+    const p = Array.from(input).reduce((a, v, i) => `${a}[^${input.substr(i)}]*?${v}`, '');
+    const re = RegExp(p);
+    return values.filter(v => v[filterby].match(re))
+}
+}
+</script>
+{% endblock javascripts %}
